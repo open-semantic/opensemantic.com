@@ -1,0 +1,121 @@
+version: "0.1.1"
+semantic_model:
+  - name: ecommerce
+    description: E-commerce analytics semantic model
+    ai_context:
+      instructions: >
+        Use this model for e-commerce analytics.
+        Revenue is always in cents.
+        Active customers have placed an order in the last 90 days.
+      synonyms:
+        - "revenue: total_revenue, sales, income"
+        - "customers: buyers, users, shoppers"
+      examples:
+        - "What was the total revenue last month?"
+        - "How many active customers do we have?"
+        - "Show me the top 10 products by revenue"
+    datasets:
+      - name: orders
+        description: All customer orders
+        source: analytics.orders
+        primary_key:
+          - order_id
+        fields:
+          - name: order_id
+            description: Unique order identifier
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: order_id
+          - name: customer_id
+            description: Customer identifier
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: customer_id
+            dimension: {}
+          - name: order_date
+            description: Date the order was placed
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: order_date
+            dimension:
+              is_time: true
+          - name: order_total
+            description: Total order amount in cents
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: order_total
+                - dialect: SNOWFLAKE
+                  expression: ORDER_TOTAL
+          - name: order_status
+            description: Current status of the order
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: order_status
+            dimension: {}
+      - name: customers
+        description: Customer master data
+        source: analytics.customers
+        primary_key:
+          - customer_id
+        fields:
+          - name: customer_id
+            description: Unique customer identifier
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: customer_id
+          - name: full_name
+            description: Full name of the customer
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: first_name || ' ' || last_name
+                - dialect: SNOWFLAKE
+                  expression: CONCAT(first_name, ' ', last_name)
+            dimension: {}
+          - name: region
+            description: Geographic region
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: region
+            dimension: {}
+    relationships:
+      - name: orders_to_customers
+        from: orders
+        to: customers
+        from_columns:
+          - customer_id
+        to_columns:
+          - customer_id
+    metrics:
+      - name: total_revenue
+        description: Total order revenue in cents
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: SUM(order_total)
+            - dialect: SNOWFLAKE
+              expression: SUM(ORDER_TOTAL)
+      - name: order_count
+        description: Total number of orders
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: COUNT(*)
+      - name: avg_order_value
+        description: Average order value
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: SUM(order_total) / NULLIF(COUNT(*), 0)
+    custom_extensions:
+      - vendor_name: SNOWFLAKE
+        data: "{\"warehouse\": \"ANALYTICS_WH\", \"role\": \"ANALYST\"}"
+      - vendor_name: DATABRICKS
+        data: "{\"catalog\": \"main\", \"schema\": \"analytics\"}"
