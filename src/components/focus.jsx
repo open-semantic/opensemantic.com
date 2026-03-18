@@ -48,6 +48,6 @@ export const focus = {
     />
   ),
   AnnotatedLine: ({ annotation, ...props }) => (
-    <InnerLine merge={props} data-focus={true} className="bg-emerald-500/20 opacity-100 px-2" />
+    <InnerLine merge={props} data-focus={true} className="bg-blue-500/20 opacity-100 px-2" />
   ),
 }

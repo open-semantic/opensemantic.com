@@ -240,19 +240,19 @@ export default function ScrollyCoding() {
             className={`
               border-l-4 px-5 py-4 rounded-r-lg transition-all duration-300 cursor-pointer
               ${selectedIndex === index
-                ? 'border-emerald-500 bg-emerald-50'
+                ? 'border-blue-500 bg-blue-50'
                 : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
               }
             `}
             onClick={() => setSelectedIndex(index)}
           >
             <h3 className={`text-lg font-semibold mb-2 ${
-              selectedIndex === index ? 'text-emerald-900' : 'text-gray-700'
+              selectedIndex === index ? 'text-blue-900' : 'text-gray-700'
             }`}>
               {step.title}
             </h3>
             <p className={`text-sm leading-relaxed ${
-              selectedIndex === index ? 'text-emerald-800' : 'text-gray-600'
+              selectedIndex === index ? 'text-blue-800' : 'text-gray-600'
             }`}>
               {step.description}
             </p>
