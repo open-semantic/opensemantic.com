@@ -46,7 +46,7 @@ function App() {
                     <h2>Open Semantic Interchange</h2>
 
                     <p>
-                        <a href="https://github.com/open-semantic-interchange/OSI">Open Semantic Interchange</a> (<abbr title="Yes, a difficult acronym for any CS-100 graduate" className="no-underline cursor-help">OSI</abbr>)
+                        <a href="https://github.com/open-semantic-interchange/OSI">Open Semantic Interchange</a> (<abbr title="Yes, a difficult acronym for any CS101 graduate" className=" cursor-help">OSI</abbr>)
                         is an industry-driven initiative to create a common, vendor-agnostic semantic model
                         specification. It ensures data definitions and business semantics remain consistent as they are
                         interchanged between AI agents, BI platforms, and analytics tools.
@@ -105,10 +105,10 @@ function App() {
 
                 {/* Editor Section */}
                 <div id="editor" className="prose max-w-none mb-8 scroll-mt-16">
-                    <h2>Semantic Model Editor</h2>
+                    <h2>Open Semantic Editor</h2>
                     <p>
-                        Create and edit semantic models visually with the <a href="https://editor.opensemantic.com/">Semantic
-                        Model Editor</a> (<a href="https://github.com/open-semantic-interchange/opensemantic-editor">GitHub</a>).
+                        Create and edit semantic models visually with the open-source <a href="https://editor.opensemantic.com/">Open
+                        Semantic Editor</a> (<a href="https://github.com/open-semantic/opensemantic-editor">GitHub</a>).
                         It provides a visual interface for creating and editing OSI semantic models.
                     </p>
                 </div>
