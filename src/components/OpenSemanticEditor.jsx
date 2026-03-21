@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { init } from 'opensemantic-editor/dist/opensemantic-editor.es.js'
 import 'opensemantic-editor/dist/opensemantic-editor.css'
 
-export default function OpenSemanticEditor({ yaml, initialView = 'diagram', height = '800px' }) {
+export default function OpenSemanticEditor({ yaml, initialView = 'form', height = '800px' }) {
   const containerRef = useRef(null)
   const editorRef = useRef(null)
   const [defaultYaml, setDefaultYaml] = useState(null)
