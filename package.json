@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.17",
     "codehike": "^1.0.7",
+    "opensemantic-editor": "^0.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
