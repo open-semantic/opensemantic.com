@@ -46,12 +46,12 @@ function App() {
 
                     <p>
                         <a href="https://github.com/open-semantic-interchange/OSI">Open Semantic Interchange</a> (OSI)
-                        is a collaborative, open-source initiative to create a common, vendor-agnostic semantic model
+                        is an industry-driven initiative to create a common, vendor-agnostic semantic model
                         specification. It ensures data definitions and business semantics remain consistent as they are
                         interchanged between AI agents, BI platforms, and analytics tools.
                     </p>
                     <p>
-                        Let's build an OSI semantic model step-by-step:
+                        Let's explore an OSI semantic model step-by-step:
                     </p>
                 </div>
             </section>
