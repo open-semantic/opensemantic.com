@@ -6,7 +6,7 @@ import { chipColors, fadeIn } from './diagram'
 function Intro() {
   return (
     <div className="prose max-w-none">
-      <h2>Semantics in Every Platform</h2>
+      <h2>Distributing Semantic Data</h2>
       <p>
         Semantic data does not live in a single platform. Business definitions need to be integrated into every
         relevant app, data platform, and AI platform. That is the key to consistency: all platforms share the same
