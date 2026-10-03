@@ -1,13 +1,19 @@
-name: Validate semantic model
+name: Validate examples
 
 on:
   push:
     branches: ["main"]
     paths:
       - 'public/semantic_model.yaml'
+      - 'public/ontology.yaml'
+      - 'public/orders.odcs.yaml'
+      - 'public/orders.odps.yaml'
   pull_request:
     paths:
       - 'public/semantic_model.yaml'
+      - 'public/ontology.yaml'
+      - 'public/orders.odcs.yaml'
+      - 'public/orders.odps.yaml'
   workflow_dispatch:
 
 jobs:
@@ -18,8 +24,23 @@ jobs:
         uses: actions/checkout@v4
       - name: Install check-jsonschema
         run: pip install check-jsonschema
-      - name: Validate semantic_model.yaml against OSI JSON Schema
+      - name: Validate semantic_model.yaml against Ossie core JSON Schema 0.1.1
         run: >
           check-jsonschema
-          --schemafile https://raw.githubusercontent.com/open-semantic-interchange/OSI/refs/heads/main/core-spec/osi-schema.json
+          --schemafile https://raw.githubusercontent.com/apache/ossie/osi-0.1.1-rc1/core-spec/osi-schema.json
           public/semantic_model.yaml
+      - name: Validate ontology.yaml against Ossie ontology JSON Schema
+        run: >
+          check-jsonschema
+          --schemafile https://raw.githubusercontent.com/apache/ossie/main/ontology/ontology.json
+          public/ontology.yaml
+      - name: Validate orders.odcs.yaml against ODCS JSON Schema 3.2.0
+        run: >
+          check-jsonschema
+          --schemafile https://raw.githubusercontent.com/bitol-io/open-data-contract-standard/main/schema/odcs-json-schema-v3.2.0.json
+          public/orders.odcs.yaml
+      - name: Validate orders.odps.yaml against ODPS JSON Schema 1.1.0
+        run: >
+          check-jsonschema
+          --schemafile https://raw.githubusercontent.com/bitol-io/open-data-product-standard/main/schema/odps-json-schema-v1.1.0.json
+          public/orders.odps.yaml

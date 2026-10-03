@@ -1,0 +1,120 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: orders
+name: Orders
+version: 1.0.0
+status: active
+domain: sales
+dataProduct: orders
+description:
+  purpose: Web shop orders for analytics and AI agents
+  usage: Revenue analysis and order volume trends
+  limitations: Only orders placed since 2020-01-01
+servers:
+  - server: production
+    environment: prod
+    type: snowflake
+    account: acme-eu
+    database: SALES
+    schema: ANALYTICS
+schema:
+  - name: orders
+    physicalName: ORDERS
+    physicalType: table
+    description: One row per order, including cancelled ones
+    authoritativeDefinitions:
+      - type: semantics
+        url: http://www.entropy-data.com/ns/main/Order
+    properties:
+      - name: order_id
+        businessName: Order Number
+        description: Order number printed on the invoice
+        logicalType: string
+        physicalType: TEXT
+        primaryKey: true
+        required: true
+        unique: true
+        authoritativeDefinitions:
+          - type: semantics
+            url: http://www.entropy-data.com/ns/main/orderId
+      - name: customer_id
+        businessName: Customer Number
+        description: Customer who placed the order
+        logicalType: string
+        physicalType: TEXT
+        required: true
+        classification: internal
+        authoritativeDefinitions:
+          - type: semantics
+            url: http://www.entropy-data.com/ns/main/customerId
+      - name: order_date
+        businessName: Order Date
+        description: Date the order was placed
+        logicalType: date
+        physicalType: DATE
+        required: true
+      - name: order_total
+        businessName: Order Total
+        description: Order total in cents after discounts
+        logicalType: integer
+        physicalType: NUMBER
+        required: true
+        quality:
+          - type: sql
+            description: Order totals are never negative
+            query: |
+              SELECT COUNT(*) FROM {object}
+              WHERE {property} < 0
+            mustBe: 0
+      - name: order_status
+        businessName: Status
+        description: Current status of the order
+        logicalType: string
+        physicalType: TEXT
+        required: true
+        quality:
+          - type: library
+            description: No other status values exist
+            metric: invalidValues
+            arguments:
+              validValues: [pending, paid, shipped, cancelled]
+            mustBe: 0
+    quality:
+      - type: library
+        description: At least 100,000 orders are expected
+        metric: rowCount
+        mustBeGreaterThan: 100000
+slaProperties:
+  - property: freshness
+    value: 24
+    unit: hours
+    element: orders.order_date
+    description: Orders are available within 24 hours
+  - property: availability
+    value: 99.9%
+  - property: retention
+    value: 5
+    unit: years
+team:
+  name: sales
+  members:
+    - username: john@example.com
+      name: John Doe
+      role: owner
+context:
+  instructions: >
+    One row per order, including cancelled orders.
+    All amounts are in cents. Divide by 100 before
+    showing an amount to a user.
+  verifiedStatements:
+    - id: monthly-revenue
+      question: What was the revenue last month?
+      answer: >
+        Use the total_revenue metric of the ecommerce
+        semantic model for orders with an order_date
+        in the previous calendar month.
+  constraints:
+    - id: no-internal-identifiers
+      constraint: >
+        Never show customer_id to a customer.
+        It is an internal identifier.

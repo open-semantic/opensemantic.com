@@ -1,0 +1,309 @@
+version: "0.2.0.dev0"
+name: ecommerce
+description: Business concepts of an online store
+ai_context:
+  instructions: >
+    Use this ontology to understand customers, orders,
+    products, payments, and shipments.
+    Amounts are always in cents.
+  synonyms:
+    - "customer: buyer, shopper, client"
+    - "order: purchase, sale"
+    - "product: item, article"
+prefixes:
+  schema: https://schema.org/
+ontology:
+  - concept: CustomerNr
+    type: ValueType
+    extends: [String]
+    description: Customer number assigned at registration
+  - concept: OrderNr
+    type: ValueType
+    extends: [String]
+    description: Order number printed on the invoice
+  - concept: LineNr
+    type: ValueType
+    extends: [Integer]
+    description: Position of a line within its order
+    requires: [ "LineNr >= 1" ]
+  - concept: Sku
+    type: ValueType
+    extends: [String]
+    description: Stock keeping unit that identifies a product
+  - concept: CategoryName
+    type: ValueType
+    extends: [String]
+  - concept: PaymentNr
+    type: ValueType
+    extends: [String]
+    description: Reference assigned by the payment provider
+  - concept: TrackingNr
+    type: ValueType
+    extends: [String]
+    description: Tracking number assigned by the carrier
+  - concept: Email
+    type: ValueType
+    extends: [String]
+  - concept: Region
+    type: ValueType
+    extends: [String]
+    description: Sales region
+  - concept: Amount
+    type: ValueType
+    extends: [Integer]
+    description: Monetary amount in cents
+    requires: [ "Amount >= 0" ]
+  - concept: Quantity
+    type: ValueType
+    extends: [Integer]
+    requires: [ "Quantity >= 1" ]
+  - concept: PaymentMethod
+    type: ValueType
+    extends: [String]
+    description: Card, PayPal, or invoice
+  - concept: Customer
+    type: EntityType
+    description: A person or company that buys from us
+    identify_by: [ nr ]
+    relationships:
+      - name: nr
+        roles:
+          - concept: CustomerNr
+        multiplicity: OneToOne
+        verbalizes:
+          - "{Customer} is identified by {CustomerNr}"
+      - name: has_email
+        roles:
+          - concept: Email
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Customer} has {Email}"
+      - name: lives_in
+        roles:
+          - concept: Region
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Customer} lives in {Region}"
+  - concept: Order
+    type: EntityType
+    description: A confirmed purchase by a customer
+    iri: schema:Order
+    identify_by: [ nr ]
+    requires: [ "Order.placed_by", "Order.placed_on" ]
+    relationships:
+      - name: nr
+        roles:
+          - concept: OrderNr
+        multiplicity: OneToOne
+        verbalizes:
+          - "{Order} is identified by {OrderNr}"
+      - name: placed_by
+        roles:
+          - concept: Customer
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Order} is placed by {Customer}"
+          - "{Customer} places {Order}"
+      - name: placed_on
+        roles:
+          - concept: Date
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Order} is placed on {Date}"
+      - name: totals
+        roles:
+          - concept: Amount
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Order} totals {Amount}"
+  - concept: LargeOrder
+    type: EntityType
+    extends: [Order]
+    description: An order of 1,000 or more
+    derived_by: [ "Order.totals >= 100000" ]
+  - concept: LineItem
+    type: EntityType
+    description: One product position within an order
+    identify_by: [ order, nr ]
+    requires: [ "LineItem.product", "LineItem.quantity" ]
+    relationships:
+      - name: order
+        roles:
+          - concept: Order
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{LineItem} belongs to {Order}"
+          - "{Order} contains {LineItem}"
+      - name: nr
+        roles:
+          - concept: LineNr
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{LineItem} has line number {LineNr}"
+      - name: product
+        roles:
+          - concept: Product
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{LineItem} is for {Product}"
+      - name: quantity
+        roles:
+          - concept: Quantity
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{LineItem} orders {Quantity}"
+      - name: price
+        roles:
+          - concept: Amount
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{LineItem} is priced at {Amount}"
+  - concept: Product
+    type: EntityType
+    description: An article we sell
+    iri: schema:Product
+    identify_by: [ sku ]
+    relationships:
+      - name: sku
+        roles:
+          - concept: Sku
+        multiplicity: OneToOne
+        verbalizes:
+          - "{Product} is identified by {Sku}"
+      - name: in_category
+        roles:
+          - concept: Category
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Product} belongs to {Category}"
+      - name: list_price
+        roles:
+          - concept: Amount
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Product} is listed at {Amount}"
+  - concept: Category
+    type: EntityType
+    description: A group of products in the shop navigation
+    identify_by: [ named ]
+    relationships:
+      - name: named
+        roles:
+          - concept: CategoryName
+        multiplicity: OneToOne
+        verbalizes:
+          - "{Category} is named {CategoryName}"
+      - name: subcategory_of
+        roles:
+          - concept: Category
+            name: parent
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Category} is a subcategory of {Category:parent}"
+  - concept: Payment
+    type: EntityType
+    description: Money received for an order
+    identify_by: [ nr ]
+    requires: [ "Payment.pays" ]
+    relationships:
+      - name: nr
+        roles:
+          - concept: PaymentNr
+        multiplicity: OneToOne
+        verbalizes:
+          - "{Payment} is identified by {PaymentNr}"
+      - name: pays
+        roles:
+          - concept: Order
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Payment} pays {Order}"
+      - name: amounts_to
+        roles:
+          - concept: Amount
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Payment} amounts to {Amount}"
+      - name: uses
+        roles:
+          - concept: PaymentMethod
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Payment} uses {PaymentMethod}"
+      - name: received_at
+        roles:
+          - concept: DateTime
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Payment} is received at {DateTime}"
+  - concept: Shipment
+    type: EntityType
+    description: A parcel sent to the customer
+    identify_by: [ tracking_nr ]
+    requires: [ "Shipment.delivers" ]
+    relationships:
+      - name: tracking_nr
+        roles:
+          - concept: TrackingNr
+        multiplicity: OneToOne
+        verbalizes:
+          - "{Shipment} is identified by {TrackingNr}"
+      - name: delivers
+        roles:
+          - concept: Order
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Shipment} delivers {Order}"
+      - name: shipped_on
+        roles:
+          - concept: Date
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Shipment} is shipped on {Date}"
+      - name: delivered_on
+        roles:
+          - concept: Date
+        multiplicity: ManyToOne
+        verbalizes:
+          - "{Shipment} is delivered on {Date}"
+ontology_mappings:
+  - name: ecommerce_mapping
+    semantic_model:
+      version: "0.2.0.dev0"
+      name: ecommerce
+      datasets:
+        - name: customers
+          source: analytics.customers
+        - name: orders
+          source: analytics.orders
+    concept_mappings:
+      - concept: Customer
+        object_mappings:
+          - expression: customers.customer_id
+        link_mappings:
+          - object_mapping:
+              expression: customers.customer_id
+            children:
+              - object_mapping:
+                  concept: Region
+                  expression: customers.region
+                relationship: lives_in
+      - concept: Order
+        object_mappings:
+          - expression: orders.order_id
+        link_mappings:
+          - object_mapping:
+              expression: orders.order_id
+            children:
+              - object_mapping:
+                  concept: Customer
+                  expression: orders.customer_id
+                relationship: placed_by
+              - object_mapping:
+                  concept: Date
+                  expression: orders.order_date
+                relationship: placed_on
+              - object_mapping:
+                  concept: Amount
+                  expression: orders.order_total
+                relationship: totals
