@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import ScrollyCoding from './components/ScrollyCoding'
 import OntologyDiagram from './components/OntologyDiagram'
 import BiToolMockup from './components/BiToolMockup'
@@ -7,6 +8,10 @@ import { semanticModelTour } from './content/semanticModelSteps'
 import { dataContractTour } from './content/dataContractSteps'
 import layersImg from './assets/layers-diagram.png'
 import ossieLogo from './assets/ossie-logo.png'
+import '@fontsource/caveat/400.css'
+
+// The editor bundle is several MB, so it loads separately from the rest of the page
+const DataContractEditor = lazy(() => import('./components/DataContractEditor'))
 
 function App() {
   return (
@@ -327,7 +332,55 @@ function App() {
                         Learn more about data contracts at <a href="https://datacontract.com">datacontract.com</a>.
                     </p>
                 </div>
+
+                {/* Data Contract Editor */}
+                <div id="data-contract-editor" className="prose max-w-none mt-12 mb-8 scroll-mt-16">
+                    <h3>Data Contract Editor</h3>
+                    <p>
+                        Create and edit data contracts visually with the open-source <a href="https://editor.datacontract.com/">Data
+                        Contract Editor</a> (<a href="https://github.com/datacontract/datacontract-editor">GitHub</a>).
+                        It provides form, diagram, and YAML views for ODCS data contracts and validates the contract as
+                        you edit. It opens with the orders data contract from above.
+                    </p>
+                </div>
             </section>
+
+            {/* Editor Browser Frame */}
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 overflow-visible">
+                <div className="relative overflow-visible">
+                    {/* Hand-written note - only visible on larger screens */}
+                    <div className="hidden xl:block absolute -left-32 top-32 text-gray-400 select-none pointer-events-none">
+                        <div className="text-xl -rotate-6 whitespace-nowrap" style={{ fontFamily: 'Caveat, cursive' }}>
+                            <div>Try out,</div>
+                            <div>it's interactive!</div>
+                        </div>
+                        <svg
+                            className="w-12 h-12 ml-8 mt-1"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M0.323784 0.04476C0.206088 0.098232 0.08712 0.22944 0.047496000000000003 0.34951200000000004C0.013344000000000002 0.453048 0.025248000000000003 0.701616 0.09806400000000001 1.4040000000000001C0.303264 3.3834960000000005 0.7845120000000001 5.344824 1.5114 7.164000000000001C3.127992 11.209848000000001 5.827848 14.607552 9.411984 17.106696C11.318688000000002 18.4362 13.583712000000002 19.510248 15.852 20.160504C17.755368 20.706144 19.821024 20.999232 21.76764 20.999856L22.259304 21 21.164160000000003 22.098C20.561832000000003 22.701912 20.052984000000002 23.2284 20.0334 23.268C19.866648 23.60508 20.102976 23.998944 20.472 23.998944C20.698248 23.998944 20.699928 23.99748 22.338648000000003 22.360752C23.368008 21.33264 23.89704 20.787528000000002 23.928648000000003 20.722416C23.990448 20.595096 23.990928 20.402808 23.929752 20.285040000000002C23.904024 20.235528000000002 23.182416 19.496568 22.303752 18.61992C20.867784 17.187312000000002 20.714256000000002 17.041296 20.617008000000002 17.015664C20.333784 16.941024 20.041272 17.126328 19.980216000000002 17.419056C19.971144 17.462544 19.976784 17.554344 19.992744 17.623056C20.021064 17.745 20.048712000000002 17.775024 21.140304 18.87L22.258824 19.992 21.755424 19.991976C20.649096 19.991952 19.467864 19.888464000000003 18.312 19.690272C14.663832000000001 19.064736 11.141328 17.412264 8.34 15.012167999999999C7.667568000000001 14.436072000000001 6.702768 13.48632 6.157776 12.864C4.178496 10.603944 2.712504 7.950216 1.84884 5.064C1.43652 3.68616 1.1415840000000002 2.0862480000000003 1.0435919999999999 0.6960000000000001C1.0356960000000002 0.5838 1.0183680000000002 0.44232 1.005096 0.381624C0.9406319999999999 0.086904 0.6008640000000001 -0.081096 0.323784 0.04476" fillRule="evenodd" />
+                        </svg>
+                    </div>
+                    <div className="rounded-lg bg-white border border-gray-200 shadow-xl overflow-hidden">
+                        {/* Browser-like header */}
+                        <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 border-b border-gray-200">
+                            <div className="flex gap-1.5">
+                                <div className="w-3 h-3 rounded-full bg-red-400"/>
+                                <div className="w-3 h-3 rounded-full bg-yellow-400"/>
+                                <div className="w-3 h-3 rounded-full bg-green-400"/>
+                            </div>
+                            <span className="text-gray-500 text-xs ml-2"><a
+                                href="https://editor.datacontract.com">editor.datacontract.com</a></span>
+                        </div>
+                        {/* Editor content */}
+                        <Suspense fallback={<div style={{ height: '700px' }} />}>
+                            <DataContractEditor height="700px" />
+                        </Suspense>
+                    </div>
+                </div>
+            </div>
 
             {/* Entropy Data Section - commented out
                 <div id="entropy-data" className="prose max-w-none scroll-mt-16 pb-8">

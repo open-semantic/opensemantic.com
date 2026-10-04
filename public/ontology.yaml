@@ -10,59 +10,70 @@ ai_context:
     - "customer: buyer, shopper, client"
     - "order: purchase, sale"
     - "product: item, article"
-prefixes:
-  schema: https://schema.org/
 ontology:
   - concept: CustomerNr
     type: ValueType
+    iri: http://example.com/ontology/webshop/CustomerNr
     extends: [String]
     description: Customer number assigned at registration
   - concept: OrderNr
     type: ValueType
+    iri: http://example.com/ontology/webshop/OrderNr
     extends: [String]
     description: Order number printed on the invoice
   - concept: LineNr
     type: ValueType
+    iri: http://example.com/ontology/webshop/LineNr
     extends: [Integer]
     description: Position of a line within its order
     requires: [ "LineNr >= 1" ]
   - concept: Sku
     type: ValueType
+    iri: http://example.com/ontology/webshop/Sku
     extends: [String]
     description: Stock keeping unit that identifies a product
   - concept: CategoryName
     type: ValueType
+    iri: http://example.com/ontology/webshop/CategoryName
     extends: [String]
   - concept: PaymentNr
     type: ValueType
+    iri: http://example.com/ontology/webshop/PaymentNr
     extends: [String]
     description: Reference assigned by the payment provider
   - concept: TrackingNr
     type: ValueType
+    iri: http://example.com/ontology/webshop/TrackingNr
     extends: [String]
     description: Tracking number assigned by the carrier
   - concept: Email
     type: ValueType
+    iri: http://example.com/ontology/webshop/Email
     extends: [String]
   - concept: Region
     type: ValueType
+    iri: http://example.com/ontology/webshop/Region
     extends: [String]
     description: Sales region
   - concept: Amount
     type: ValueType
+    iri: http://example.com/ontology/webshop/Amount
     extends: [Integer]
     description: Monetary amount in cents
     requires: [ "Amount >= 0" ]
   - concept: Quantity
     type: ValueType
+    iri: http://example.com/ontology/webshop/Quantity
     extends: [Integer]
     requires: [ "Quantity >= 1" ]
   - concept: PaymentMethod
     type: ValueType
+    iri: http://example.com/ontology/webshop/PaymentMethod
     extends: [String]
     description: Card, PayPal, or invoice
   - concept: Customer
     type: EntityType
+    iri: http://example.com/ontology/webshop/Customer
     description: A person or company that buys from us
     identify_by: [ nr ]
     relationships:
@@ -86,8 +97,8 @@ ontology:
           - "{Customer} lives in {Region}"
   - concept: Order
     type: EntityType
+    iri: http://example.com/ontology/webshop/Order
     description: A confirmed purchase by a customer
-    iri: schema:Order
     identify_by: [ nr ]
     requires: [ "Order.placed_by", "Order.placed_on" ]
     relationships:
@@ -118,11 +129,13 @@ ontology:
           - "{Order} totals {Amount}"
   - concept: LargeOrder
     type: EntityType
+    iri: http://example.com/ontology/webshop/LargeOrder
     extends: [Order]
     description: An order of 1,000 or more
     derived_by: [ "Order.totals >= 100000" ]
   - concept: LineItem
     type: EntityType
+    iri: http://example.com/ontology/webshop/LineItem
     description: One product position within an order
     identify_by: [ order, nr ]
     requires: [ "LineItem.product", "LineItem.quantity" ]
@@ -160,8 +173,8 @@ ontology:
           - "{LineItem} is priced at {Amount}"
   - concept: Product
     type: EntityType
+    iri: http://example.com/ontology/webshop/Product
     description: An article we sell
-    iri: schema:Product
     identify_by: [ sku ]
     relationships:
       - name: sku
@@ -184,6 +197,7 @@ ontology:
           - "{Product} is listed at {Amount}"
   - concept: Category
     type: EntityType
+    iri: http://example.com/ontology/webshop/Category
     description: A group of products in the shop navigation
     identify_by: [ named ]
     relationships:
@@ -202,6 +216,7 @@ ontology:
           - "{Category} is a subcategory of {Category:parent}"
   - concept: Payment
     type: EntityType
+    iri: http://example.com/ontology/webshop/Payment
     description: Money received for an order
     identify_by: [ nr ]
     requires: [ "Payment.pays" ]
@@ -238,6 +253,7 @@ ontology:
           - "{Payment} is received at {DateTime}"
   - concept: Shipment
     type: EntityType
+    iri: http://example.com/ontology/webshop/Shipment
     description: A parcel sent to the customer
     identify_by: [ tracking_nr ]
     requires: [ "Shipment.delivers" ]

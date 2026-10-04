@@ -24,7 +24,7 @@ schema:
     description: One row per order, including cancelled ones
     authoritativeDefinitions:
       - type: semantics
-        url: http://www.entropy-data.com/ns/main/Order
+        url: http://example.com/ontology/webshop/Order
     properties:
       - name: order_id
         businessName: Order Number
@@ -36,7 +36,7 @@ schema:
         unique: true
         authoritativeDefinitions:
           - type: semantics
-            url: http://www.entropy-data.com/ns/main/orderId
+            url: http://example.com/ontology/webshop/OrderNr
       - name: customer_id
         businessName: Customer Number
         description: Customer who placed the order
@@ -46,7 +46,7 @@ schema:
         classification: internal
         authoritativeDefinitions:
           - type: semantics
-            url: http://www.entropy-data.com/ns/main/customerId
+            url: http://example.com/ontology/webshop/CustomerNr
       - name: order_date
         businessName: Order Date
         description: Date the order was placed
@@ -84,6 +84,60 @@ schema:
         description: At least 100,000 orders are expected
         metric: rowCount
         mustBeGreaterThan: 100000
+  - name: line_items
+    physicalName: LINE_ITEMS
+    physicalType: table
+    description: One row per product position within an order
+    authoritativeDefinitions:
+      - type: semantics
+        url: http://example.com/ontology/webshop/LineItem
+    properties:
+      - name: order_id
+        businessName: Order Number
+        description: Order the line item belongs to
+        logicalType: string
+        physicalType: TEXT
+        primaryKey: true
+        primaryKeyPosition: 1
+        required: true
+        relationships:
+          - to: orders.order_id
+        authoritativeDefinitions:
+          - type: semantics
+            url: http://example.com/ontology/webshop/OrderNr
+      - name: line_nr
+        businessName: Line Number
+        description: Position of the line within its order, starting at 1
+        logicalType: integer
+        physicalType: NUMBER
+        primaryKey: true
+        primaryKeyPosition: 2
+        required: true
+      - name: sku
+        businessName: SKU
+        description: Stock keeping unit of the ordered product
+        logicalType: string
+        physicalType: TEXT
+        required: true
+      - name: quantity
+        businessName: Quantity
+        description: Number of units ordered
+        logicalType: integer
+        physicalType: NUMBER
+        required: true
+        quality:
+          - type: sql
+            description: Every line orders at least one unit
+            query: |
+              SELECT COUNT(*) FROM {object}
+              WHERE {property} < 1
+            mustBe: 0
+      - name: price
+        businessName: Unit Price
+        description: Price per unit in cents
+        logicalType: integer
+        physicalType: NUMBER
+        required: true
 slaProperties:
   - property: freshness
     value: 24
@@ -103,9 +157,10 @@ team:
       role: owner
 context:
   instructions: >
-    One row per order, including cancelled orders.
-    All amounts are in cents. Divide by 100 before
-    showing an amount to a user.
+    orders has one row per order, including cancelled
+    orders. line_items has one row per product in an
+    order. All amounts are in cents. Divide by 100
+    before showing an amount to a user.
   verifiedStatements:
     - id: monthly-revenue
       question: What was the revenue last month?

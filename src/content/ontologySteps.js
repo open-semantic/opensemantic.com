@@ -12,8 +12,8 @@ export const ontologyTour = {
     {
       id: 'ontology',
       title: 'Ontology',
-      description: 'An Ossie ontology starts with a version, a name, and an optional description and AI context. Prefixes abbreviate IRIs, so concepts can point to existing vocabularies such as schema.org.',
-      code: `# !focus(1:14)
+      description: 'An Ossie ontology starts with a version, a name, and an optional description and AI context.',
+      code: `# !focus(1:12)
 version: "0.2.0.dev0"
 name: ecommerce
 description: Business concepts of an online store
@@ -26,8 +26,6 @@ ai_context:
     - "customer: buyer, shopper, client"
     - "order: purchase, sale"
     - "product: item, article"
-prefixes:
-  schema: https://schema.org/
 ontology:
   - concept: Customer
     type: EntityType
@@ -37,7 +35,7 @@ ontology:
     {
       id: 'concepts',
       title: 'Concepts',
-      description: 'Concepts are the things that matter to the business. Entity types like Customer and Order are real-world objects, referenced by an identifier. Value types like CustomerNr or Amount are data types with business meaning that extend built-in types such as String, Integer, or Date.',
+      description: 'Concepts are the things that matter to the business. Entity types like Customer and Order are real-world objects, referenced by an identifier. Value types like CustomerNr or Amount are data types with business meaning that extend built-in types such as String, Integer, or Date. An optional IRI gives a concept a global identifier, so data contracts and other tools can refer to it.',
       code: `version: "0.2.0.dev0"
 name: ecommerce
 ontology:
@@ -64,8 +62,8 @@ ontology:
     identify_by: [ nr ]
   - concept: Order
     type: EntityType
+    iri: http://example.com/ontology/webshop/Order
     description: A confirmed purchase by a customer
-    iri: schema:Order
     identify_by: [ nr ]`
     },
     {

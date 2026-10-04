@@ -8,4 +8,9 @@ export default defineConfig({
       react(),
       tailwindcss(),
   ],
+  // Pre-bundling moves the editor out of its package folder, which breaks the
+  // relative URLs of its Monaco web workers in dev mode
+  optimizeDeps: {
+    exclude: ['datacontract-editor'],
+  },
 })

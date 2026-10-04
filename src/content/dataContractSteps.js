@@ -49,7 +49,7 @@ schema:
     description: One row per order, including cancelled ones
     authoritativeDefinitions:
       - type: semantics
-        url: http://www.entropy-data.com/ns/main/Order
+        url: http://example.com/ontology/webshop/Order
     properties:
       - name: order_id
         businessName: Order Number
@@ -61,7 +61,7 @@ schema:
         unique: true
         authoritativeDefinitions:
           - type: semantics
-            url: http://www.entropy-data.com/ns/main/orderId
+            url: http://example.com/ontology/webshop/OrderNr
       - name: customer_id
         businessName: Customer Number
         description: Customer who placed the order
@@ -71,7 +71,7 @@ schema:
         classification: internal
         authoritativeDefinitions:
           - type: semantics
-            url: http://www.entropy-data.com/ns/main/customerId
+            url: http://example.com/ontology/webshop/CustomerNr
       - name: order_total
         businessName: Order Total
         description: Order total in cents after discounts
