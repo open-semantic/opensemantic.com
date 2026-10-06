@@ -1,28 +1,33 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Pre, highlight } from 'codehike/code'
 import { tokenTransitions } from './token-transitions'
 import { focus } from './focus'
 
+// Code Hike annotations like "# !focus(1:12)" are only meaningful to the highlighter
+const stripAnnotations = (code) => code.replace(/^\s*# !.*\n/gm, '')
+
 export default function ScrollyCoding({ steps, fullExample, fileName, reference }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [highlightedSteps, setHighlightedSteps] = useState([])
-  const [codeSteps, setCodeSteps] = useState([])
+  const [fullYaml, setFullYaml] = useState('')
   const stepRefs = useRef([])
 
-  // Fetch full YAML and initialize code steps
+  // The steps render without the fetched full example, so the prerendered page contains their text
+  const codeSteps = useMemo(() => [
+    ...steps,
+    { id: 'full-example', title: 'Full Example', description: fullExample.description, code: fullYaml },
+  ], [steps, fullExample, fullYaml])
+
+  // Fetch full YAML and highlight all code steps
   useEffect(() => {
     async function init() {
       const response = await fetch(fullExample.src)
-      const fullYaml = await response.text()
-      const allSteps = [
-        ...steps,
-        { id: 'full-example', title: 'Full Example', description: fullExample.description, code: fullYaml },
-      ]
-      setCodeSteps(allSteps)
+      const yaml = await response.text()
+      setFullYaml(yaml)
 
       const highlighted = await Promise.all(
-        allSteps.map((step) =>
-          highlight({ value: step.code, lang: 'yaml', meta: '' }, 'github-dark')
+        [...steps.map((step) => step.code), yaml].map((code) =>
+          highlight({ value: code, lang: 'yaml', meta: '' }, 'github-dark')
         )
       )
       setHighlightedSteps(highlighted)
@@ -32,8 +37,6 @@ export default function ScrollyCoding({ steps, fullExample, fileName, reference 
 
   // Intersection observer for scroll-based selection
   useEffect(() => {
-    if (codeSteps.length === 0) return
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -61,10 +64,6 @@ export default function ScrollyCoding({ steps, fullExample, fileName, reference 
 
     return () => observer.disconnect()
   }, [codeSteps])
-
-  if (codeSteps.length === 0) {
-    return <div className="flex gap-8 min-h-[600px]" />
-  }
 
   return (
     <div className="flex gap-8">
@@ -125,7 +124,7 @@ export default function ScrollyCoding({ steps, fullExample, fileName, reference 
               />
             ) : (
               <pre className="text-gray-300 font-mono text-sm whitespace-pre min-h-[24rem]">
-                {codeSteps[selectedIndex].code}
+                {stripAnnotations(codeSteps[selectedIndex].code)}
               </pre>
             )}
           </div>

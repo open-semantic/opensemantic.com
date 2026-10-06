@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="canonical" href="https://opensemantic.com/" />
 
@@ -22,6 +24,7 @@
     <meta property="og:image" content="https://opensemantic.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Open Semantic: open standards for semantic data" />
     <meta property="og:site_name" content="opensemantic.com" />
     <meta property="og:locale" content="en_US" />
 
@@ -31,177 +34,81 @@
     <meta name="twitter:title" content="Open Semantic: Apache Ossie Ontologies and Semantic Models" />
     <meta name="twitter:description" content="Open standards for semantic data. Learn Apache Ossie (formerly Open Semantic Interchange, OSI), the vendor-neutral specification for ontologies and semantic models." />
     <meta name="twitter:image" content="https://opensemantic.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Open Semantic: open standards for semantic data" />
 
-    <!-- Structured Data: Organization -->
+    <!-- Plain-text summary for LLMs and AI agents -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly summary" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Open Semantic",
-      "url": "https://opensemantic.com",
-      "sameAs": [
-        "https://github.com/open-semantic"
-      ]
-    }
-    </script>
-
-    <!-- Structured Data: WebSite -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Open Semantic",
-      "url": "https://opensemantic.com",
-      "description": "Open standards for semantic data: Apache Ossie ontologies and semantic models for AI agents, BI platforms, and analytics tools."
-    }
-    </script>
-
-    <!-- Structured Data: WebPage -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Open Semantic: Apache Ossie Ontologies and Semantic Models",
-      "description": "Open standards for semantic data. Learn Apache Ossie, the vendor-neutral specification for ontologies and semantic models.",
-      "url": "https://opensemantic.com",
-      "mainEntity": {
-        "@type": "Article",
-        "headline": "What is Semantic Data?",
-        "description": "Semantic data provides reliable business context for humans and agents: business concepts and how they relate, how metrics are calculated, and who owns a data product and guarantees its quality.",
-        "author": {
+      "@graph": [
+        {
           "@type": "Organization",
-          "name": "Entropy Data"
-        }
-      }
-    }
-    </script>
-
-    <!-- Structured Data: FAQPage -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is semantic data?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Semantic data provides reliable business context for humans and agents. Tables and columns describe how data is stored, but not what it means. Semantic data adds that meaning: the business concepts and how they relate, how metrics like revenue or churn are calculated, and who owns a data product and guarantees its quality."
-          }
+          "@id": "https://www.entropy-data.com/#organization",
+          "name": "Entropy Data",
+          "url": "https://www.entropy-data.com/",
+          "logo": "https://entropy-data.com/media/logo_fuchsia_v2.svg"
         },
         {
-          "@type": "Question",
-          "name": "What is Apache Ossie?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Apache Ossie (incubating) is an industry-driven, vendor-neutral open standard for semantic data. It defines YAML and JSON formats for ontologies and semantic models, so that business definitions stay consistent as they are exchanged between AI agents, BI platforms, and analytics tools. It is developed under Apache Software Foundation governance and licensed under the Apache License 2.0."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Apache Ossie the same as Open Semantic Interchange (OSI)?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Open Semantic Interchange (OSI) was launched by Snowflake and partners in September 2025. In July 2026 the project entered the Apache Incubator and was renamed Apache Ossie to avoid confusion with other projects that share the OSI acronym."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is an Apache Ossie ontology?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "An Ossie ontology is a conceptual model of the business. It defines concepts (entity types and value types), relationships between them with multiplicities and verbalizations, and business rules (requires and derived_by expressions). Ontology mappings connect concepts and relationships to the datasets and fields of an Ossie semantic model."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What does an Apache Ossie semantic model include?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "An Ossie semantic model includes datasets (logical fact and dimension tables with fields), relationships (foreign key connections between datasets), metrics (aggregate business measures like revenue and order count), AI context (instructions, synonyms, and examples for AI agents), and custom extensions for vendor-specific metadata."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do Apache Ossie, ODPS, and ODCS fit together?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Apache Ossie ontologies and semantic models describe what data means. The Bitol standards describe the data that is delivered: the Open Data Product Standard (ODPS) defines a data product with its owner and output ports, and the Open Data Contract Standard (ODCS) defines the schema, quality rules, SLAs, and AI context of each output port. ODCS authoritative definitions can link tables and columns to ontology concepts."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What platforms does Apache Ossie support?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ossie supports multi-dialect expressions for ANSI SQL, Snowflake, Databricks, Tableau, and MDX, with BigQuery, DAX, MAQL, Sigma, ThoughtSpot, and a portable Ossie SQL dialect added in version 0.2.0. Vendor-specific metadata for Snowflake, Salesforce, dbt, Databricks, GoodData, and others is stored in custom extensions."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does Apache Ossie differ from vendor-specific semantic layers?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Unlike vendor-specific semantic layers, Ossie is a vendor-neutral specification that can be translated to and from any platform. This prevents metadata lock-in and lets the same definitions feed AI, data, BI, and software platforms."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <!-- Structured Data: HowTo -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": "How to Create a Semantic Model with Apache Ossie",
-      "description": "Step-by-step guide to creating a semantic model using the Apache Ossie specification",
-      "step": [
-        {
-          "@type": "HowToStep",
-          "name": "Define the semantic model",
-          "text": "Start with basic metadata: specify the name, description, and AI context for your semantic model."
-        },
-        {
-          "@type": "HowToStep",
-          "name": "Define datasets",
-          "text": "Add logical datasets (fact and dimension tables) with their source, primary key, and fields including multi-dialect expressions."
-        },
-        {
-          "@type": "HowToStep",
-          "name": "Define relationships",
-          "text": "Specify foreign key relationships between datasets to enable joins and navigation."
-        },
-        {
-          "@type": "HowToStep",
-          "name": "Define metrics",
-          "text": "Add aggregate business metrics like revenue, order count, etc. with multi-dialect expression support."
-        },
-        {
-          "@type": "HowToStep",
-          "name": "Add custom extensions",
-          "text": "Store vendor-specific metadata for platforms such as Snowflake, Databricks, or dbt without changing the core model."
-        }
-      ]
-    }
-    </script>
-
-    <!-- Structured Data: BreadcrumbList -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
+          "@type": "WebSite",
+          "@id": "https://opensemantic.com/#website",
           "name": "Open Semantic",
-          "item": "https://opensemantic.com"
+          "url": "https://opensemantic.com/",
+          "description": "Open standards for semantic data: Apache Ossie ontologies and semantic models, and Bitol data products and data contracts, for AI agents, BI platforms, and analytics tools.",
+          "inLanguage": "en",
+          "publisher": { "@id": "https://www.entropy-data.com/#organization" },
+          "sameAs": ["https://github.com/open-semantic"]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://opensemantic.com/#webpage",
+          "name": "Open Semantic: Apache Ossie Ontologies and Semantic Models",
+          "description": "Open standards for semantic data. Learn Apache Ossie (formerly Open Semantic Interchange, OSI), the vendor-neutral specification for ontologies and semantic models.",
+          "url": "https://opensemantic.com/",
+          "inLanguage": "en",
+          "isPartOf": { "@id": "https://opensemantic.com/#website" },
+          "publisher": { "@id": "https://www.entropy-data.com/#organization" },
+          "author": { "@id": "https://www.entropy-data.com/#organization" },
+          "datePublished": "2026-03-18",
+          "dateModified": "2026-10-06",
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://opensemantic.com/og-image.png",
+            "width": 1200,
+            "height": 630
+          },
+          "about": [
+            { "@type": "Thing", "name": "Semantic data" },
+            {
+              "@type": "SoftwareSourceCode",
+              "name": "Apache Ossie",
+              "alternateName": ["Ossie", "Open Semantic Interchange", "OSI"],
+              "description": "Vendor-neutral open standard for ontologies and semantic models, undergoing incubation at the Apache Software Foundation.",
+              "url": "https://ossie.apache.org/",
+              "codeRepository": "https://github.com/apache/ossie",
+              "license": "https://www.apache.org/licenses/LICENSE-2.0"
+            },
+            {
+              "@type": "CreativeWork",
+              "name": "Open Data Product Standard (ODPS)",
+              "url": "https://bitol-io.github.io/open-data-product-standard/",
+              "license": "https://www.apache.org/licenses/LICENSE-2.0"
+            },
+            {
+              "@type": "CreativeWork",
+              "name": "Open Data Contract Standard (ODCS)",
+              "url": "https://bitol-io.github.io/open-data-contract-standard/",
+              "license": "https://www.apache.org/licenses/LICENSE-2.0"
+            }
+          ]
         }
       ]
     }
     </script>
+    <!--faq-json-ld-->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="a40b0ac3-edef-40cb-bc6c-16905ca4c1aa"></script>
   </head>
   <body>

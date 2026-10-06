@@ -1,36 +1,24 @@
 # robots.txt for opensemantic.com
-# Open Semantic Interchange
+# Search engines and AI crawlers are welcome to index and cite this site.
 
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://opensemantic.com/sitemap.xml
-
-# Allow all major search engines and AI crawlers
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
+# AI search and assistant crawlers
 User-agent: GPTBot
-Allow: /
-
+User-agent: OAI-SearchBot
 User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
 User-agent: PerplexityBot
-Allow: /
-
+User-agent: Perplexity-User
 User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: CCBot
+User-agent: DuckAssistBot
+User-agent: MistralAI-User
 Allow: /
 
-User-agent: CCBot
-Allow: /
+Sitemap: https://opensemantic.com/sitemap.xml

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useSyncExternalStore } from 'react'
 import ScrollyCoding from './components/ScrollyCoding'
 import OntologyDiagram from './components/OntologyDiagram'
 import BiToolMockup from './components/BiToolMockup'
@@ -6,6 +6,7 @@ import SemanticsEverywhere from './components/everywhere/SemanticsEverywhere'
 import { ontologyTour } from './content/ontologySteps'
 import { semanticModelTour } from './content/semanticModelSteps'
 import { dataContractTour } from './content/dataContractSteps'
+import { faq } from './content/faq'
 import layersImg from './assets/layers-diagram.png'
 import ossieLogo from './assets/ossie-logo.png'
 import '@fontsource/caveat/400.css'
@@ -13,7 +14,13 @@ import '@fontsource/caveat/400.css'
 // The editor bundle is several MB, so it loads separately from the rest of the page
 const DataContractEditor = lazy(() => import('./components/DataContractEditor'))
 
+// False while prerendering and hydrating, so the editor only mounts in the browser
+const subscribeNoop = () => () => {}
+const useIsClient = () => useSyncExternalStore(subscribeNoop, () => true, () => false)
+
 function App() {
+  const isClient = useIsClient()
+
   return (
     <div className="min-h-screen bg-white">
 
@@ -376,7 +383,7 @@ function App() {
                         </div>
                         {/* Editor content */}
                         <Suspense fallback={<div style={{ height: '700px' }} />}>
-                            <DataContractEditor height="700px" />
+                            {isClient ? <DataContractEditor height="700px" /> : <div style={{ height: '700px' }} />}
                         </Suspense>
                     </div>
                 </div>
@@ -403,6 +410,17 @@ function App() {
             </section>
 
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-48">
+                {/* FAQ */}
+                <div id="faq" className="prose max-w-none scroll-mt-16 pb-24">
+                    <h2>Frequently Asked Questions</h2>
+                    {faq.map(({ question, answer }) => (
+                        <div key={question}>
+                            <h3>{question}</h3>
+                            <p>{answer}</p>
+                        </div>
+                    ))}
+                </div>
+
                 {/* About */}
                 <div id="about" className="prose max-w-none scroll-mt-16 pb-36">
                     <h2>About</h2>

@@ -1,0 +1,56 @@
+# Open Semantic
+
+> Open Semantic (opensemantic.com) explains open standards for semantic data: Apache Ossie (formerly Open Semantic Interchange, OSI) for ontologies and semantic models, and the Bitol standards ODPS and ODCS for data products and data contracts. It is maintained by Entropy Data and is independent of the Apache Software Foundation; the official Ossie website is https://ossie.apache.org/.
+
+Semantic data provides reliable business context for humans and AI agents. Tables and columns describe how data is stored, but not what it means. Semantic data adds that meaning: the business concepts and how they relate, how metrics like revenue or churn are calculated, and who owns a data product and guarantees its quality. When this context is defined once in an open, machine-readable format, analysts, BI tools, and AI agents all work from the same definitions.
+
+The standards cover these layers:
+
+- Conceptual: Ontology (business concepts, relationships, rules), specified by Apache Ossie.
+- Logical: Semantic models (datasets, fields, relationships, metrics, multi-dialect expressions), specified by Apache Ossie.
+- Logical: Data products and data contracts (ownership, schema, quality, SLAs), specified by Bitol ODPS and ODCS.
+- Physical: Data (tables, columns, files) in platforms such as Snowflake, Databricks, and BigQuery.
+
+## Key facts
+
+- Apache Ossie (incubating) is an industry-driven, vendor-neutral open standard for semantic data, written in YAML or JSON and licensed under the Apache License 2.0.
+- Ossie started as Open Semantic Interchange (OSI), launched by Snowflake and partners in September 2025, and entered the Apache Incubator in July 2026 under the new name Apache Ossie.
+- More than 50 organizations contribute, including Snowflake, Databricks, Salesforce, dbt Labs, Dremio, GoodData, RelationalAI, and Honeydew.
+- Ossie semantic model specification: 0.1.1 released, 0.2.0 in development. Ossie ontology specification: part of 0.2.0 (in development).
+- An Ossie ontology defines concepts (entity types and value types), relationships with multiplicities and verbalizations, business rules (requires and derived_by expressions), and mappings to the datasets and fields of a semantic model.
+- An Ossie semantic model defines datasets, fields, relationships, metrics, AI context (instructions, synonyms, examples), and custom extensions for vendor-specific metadata.
+- Ossie expressions support ANSI SQL, Snowflake, Databricks, Tableau, and MDX; version 0.2.0 adds BigQuery, DAX, MAQL, Sigma, ThoughtSpot, and a portable Ossie SQL dialect.
+- Bitol is a project of the Linux Foundation's LF AI & Data Foundation. It maintains the Open Data Product Standard (ODPS, version 1.1.0) and the Open Data Contract Standard (ODCS, version 3.2.0), both under the Apache License 2.0.
+- Each output port of an ODPS data product has an ODCS data contract. A semantic model with clear ownership can itself be a data product, specified by a data contract (ODCS 3.2 adds semanticType for measures and dimensions).
+- Open formats avoid semantic vendor lock-in: definitions are kept as YAML in Git, validated in CI against JSON Schemas, versioned, and distributed to apps, data platforms, and AI platforms.
+
+## Pages
+
+- [Open Semantic](https://opensemantic.com/): What semantic data is, why it matters for AI, Apache Ossie ontologies and semantic models, data products and data contracts, distributing semantic data, and an FAQ.
+
+## Examples
+
+- [Ontology example](https://opensemantic.com/ontology.yaml): Ossie ontology for an online store with customers, orders, products, payments, and shipments.
+- [Semantic model example](https://opensemantic.com/semantic_model.yaml): Ossie semantic model (core specification 0.1.1) with datasets, relationships, and metrics.
+- [Data contract example](https://opensemantic.com/orders.odcs.yaml): ODCS 3.2.0 data contract for orders.
+- [Data product example](https://opensemantic.com/orders.odps.yaml): ODPS 1.1.0 data product for orders.
+
+## Specifications
+
+- [Apache Ossie website](https://ossie.apache.org/): Official project website.
+- [Apache Ossie on GitHub](https://github.com/apache/ossie): Source, issues, and discussions.
+- [Ossie core specification](https://github.com/apache/ossie/blob/main/core-spec/spec.md): Semantic model specification document.
+- [Ossie ontology specification](https://github.com/apache/ossie/blob/main/ontology/ontology.md): Ontology specification document.
+- [Open Data Product Standard (ODPS)](https://bitol-io.github.io/open-data-product-standard/)
+- [Open Data Contract Standard (ODCS)](https://bitol-io.github.io/open-data-contract-standard/)
+
+## Tools
+
+- [Data Contract CLI](https://github.com/datacontract/datacontract-cli): Validate data contracts and test data against them.
+- [Data Contract Editor](https://editor.datacontract.com/): Visual editor for ODCS data contracts.
+- [Data Product CLI](https://github.com/datacontract/dataproduct-cli): Manage data products.
+
+## Optional
+
+- [datacontract.com](https://datacontract.com): Learn more about data contracts.
+- [Entropy Data](https://www.entropy-data.com/): Maintainer of this website.
