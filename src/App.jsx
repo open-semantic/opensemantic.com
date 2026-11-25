@@ -108,6 +108,7 @@ function App() {
                         definitions in their own formats. Open standards turn these scattered definitions into one asset
                         that you own:
                     </p>
+                    <ExplainerVideo {...videos.openStandards} />
                     <ul>
                         <li>
                             <strong>One format, many tools.</strong> <a href="#ossie">Apache Ossie</a> describes

@@ -37,6 +37,7 @@ The standards cover these layers:
 
 ## Videos
 
+- [Four Open Standards for Data Management](https://youtu.be/96QQ5cuOCL0): Entropy Explains #13 (1:49). Ossie ontologies and semantic models, ODPS, and ODCS, and how they fit together.
 - [Ontologies with Apache Ossie](https://youtu.be/vaq6-mMqRzE): Entropy Explains #17 (2:16). Concepts, relationships, rules, and mappings in an Ossie ontology.
 - [Semantic Models with Apache Ossie](https://youtu.be/b9Zr0oESPUI): Entropy Explains #16 (2:10). Datasets, joins, and metrics defined once for every tool.
 - [The Open Data Product Standard from Bitol](https://youtu.be/BYYFeixQdmc): Entropy Explains #15 (2:31). Data products with ODPS.

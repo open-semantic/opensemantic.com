@@ -1,5 +1,13 @@
 // Entropy Explains episodes, hosted on YouTube, with a landing page on entropy-data.com
 export const videos = {
+  openStandards: {
+    id: '96QQ5cuOCL0',
+    episode: 13,
+    title: 'Four Open Standards for Data Management',
+    duration: '1:49',
+    thumbnail: '/videos/13-open-standards.webp',
+    page: 'https://www.entropy-data.com/learn/entropy-explains-open-standards',
+  },
   odcs: {
     id: 'Bk5mGgSssFI',
     episode: 14,
