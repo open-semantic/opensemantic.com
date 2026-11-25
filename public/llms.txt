@@ -35,6 +35,13 @@ The standards cover these layers:
 - [Data contract example](https://opensemantic.com/orders.odcs.yaml): ODCS 3.2.0 data contract for orders.
 - [Data product example](https://opensemantic.com/orders.odps.yaml): ODPS 1.1.0 data product for orders.
 
+## Videos
+
+- [Ontologies with Apache Ossie](https://youtu.be/vaq6-mMqRzE): Entropy Explains #17 (2:16). Concepts, relationships, rules, and mappings in an Ossie ontology.
+- [Semantic Models with Apache Ossie](https://youtu.be/b9Zr0oESPUI): Entropy Explains #16 (2:10). Datasets, joins, and metrics defined once for every tool.
+- [The Open Data Product Standard from Bitol](https://youtu.be/BYYFeixQdmc): Entropy Explains #15 (2:31). Data products with ODPS.
+- [The Open Data Contract Standard from Bitol](https://youtu.be/Bk5mGgSssFI): Entropy Explains #14 (2:50). Data contracts with ODCS.
+
 ## Specifications
 
 - [Apache Ossie website](https://ossie.apache.org/): Official project website.

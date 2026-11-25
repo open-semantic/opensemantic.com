@@ -7,6 +7,8 @@ import { ontologyTour } from './content/ontologySteps'
 import { semanticModelTour } from './content/semanticModelSteps'
 import { dataContractTour } from './content/dataContractSteps'
 import { faq } from './content/faq'
+import { videos } from './content/videos'
+import ExplainerVideo from './components/ExplainerVideo'
 import layersImg from './assets/layers-diagram.png'
 import ossieLogo from './assets/ossie-logo.png'
 import '@fontsource/caveat/400.css'
@@ -184,6 +186,7 @@ function App() {
                         An ontology describes the business in its own terms: the concepts that matter, how they relate,
                         and the rules that always hold. It is independent of where and how the data is stored.
                     </p>
+                    <ExplainerVideo {...videos.ontologies} />
                     <p>
                         Here is an ontology for an online store with customers, orders, products, payments, and
                         shipments. Click a concept to see its properties and rules:
@@ -229,6 +232,7 @@ function App() {
                         underlying tables and columns, so every metric resolves to the actual data. Expressions can be written in
                         multiple SQL dialects, so BI tools, query engines, and AI agents all calculate revenue the same way.
                     </p>
+                    <ExplainerVideo {...videos.semanticModels} />
                     <p>
                         In a BI tool, the semantic model shows up as named metrics and dimensions that business users
                         can drag into a report:
@@ -303,6 +307,10 @@ function App() {
                             </p>
                             <p className="mt-3 text-xs text-gray-500">Version 3.2.0</p>
                         </a>
+                    </div>
+                    <div className="not-prose grid gap-x-6 sm:grid-cols-2">
+                        <ExplainerVideo {...videos.odps} />
+                        <ExplainerVideo {...videos.odcs} />
                     </div>
                     <p>
                         Each output port of a data product has a data contract. The contract defines the data product
